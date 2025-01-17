@@ -1,32 +1,38 @@
-# Base Image
+# Use an official Python base image with Alpine Linux
 FROM python:3.10-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+
+# Set environment variables for Python
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install dependencies for PostgreSQL and other libraries
 RUN apt-get update && apt-get install -y \
-    libpq-dev gcc \
-    && rm -rf /var/lib/apt/lists/*
+    gcc \
+    libpq-dev \
+    libffi-dev \
+    libssl-dev \
+    cargo \
+    make && \
+    apt-get clean
 
-# Copy and install Python dependencies
-COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project files
+# Install Python dependencies
+COPY requirements.txt /app/
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
+
+# Copy the application code
 COPY . /app/
 
 # Expose port 8000
 EXPOSE 8000
 
-# Use a .env file for environment variables
-# (Optional but recommended)
-ENV DJANGO_SETTINGS_MODULE=myproject.settings
+# Add the .env file (optional, if needed during development)
+COPY .env /app/
 
-# Run the production server
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "myproject.wsgi:application"]
-
+# Run the development server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

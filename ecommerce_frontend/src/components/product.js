@@ -129,7 +129,7 @@ const Products = () => {
           <tr>
             <th>Product ID</th>
             <th>Product Name</th>
-            <th>Image</th>
+            {/* <th>Image</th> */}
             <th>Category</th>
             <th>Available Stock</th>
             <th>Marked Price</th>
@@ -141,15 +141,15 @@ const Products = () => {
             <tr key={product.product_id}>
               <td>{product.product_id}</td>
               <td>{product.name}</td>
-              <td>
-                {/* {product.image && (
+              {/* <td>
+                {product.image && (
                   <img
                     src={`http://127.0.0.1:8000${product.image}`}
                     alt={product.name}
                     width="100"
                   />
-                )} */}
-              </td>
+                )}
+              </td> */}
               <td>{product.category_name}</td>
               <td>{product.available_stock}</td>
               <td>{product.marked_price}</td>

@@ -11,7 +11,7 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 if not DEBUG and SECRET_KEY == "default-secret-key":
     raise ValueError("Please set a valid SECRET_KEY in your environment variables.")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0','localhost','127.0.0.1']
 
 INSTALLED_APPS = [
     'rest_framework',
@@ -29,8 +29,12 @@ INSTALLED_APPS = [
 ]
 AUTH_USER_MODEL = 'api.CustomUser'
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -38,7 +42,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
      'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
@@ -48,19 +51,32 @@ WSGI_APPLICATION = 'ecommerce_backend.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://127.0.0.1:9200"
+    "http://127.0.0.1:9200",
+    "http://127.0.0.1:3000"
 ]
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv("DB_NAME", "ecommerce_db"),
+#         'USER': os.getenv("DB_USER", "postgres"),
+#         'PASSWORD': os.getenv("DB_PASSWORD", "root123"),
+#         'HOST': os.getenv("DB_HOST", "localhost"),
+#         'PORT': os.getenv("DB_PORT", "5432"),
+#     }
+# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("DB_NAME", "ecommerce_db"),
-        'USER': os.getenv("DB_USER", "postgres"),
-        'PASSWORD': os.getenv("DB_PASSWORD", "root123"),
-        'HOST': os.getenv("DB_HOST", "localhost"),
-        'PORT': os.getenv("DB_PORT", "5432"),
+        'NAME': 'ecommerce_db',
+        'USER': 'postgres',
+        'PASSWORD': 'root123',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
