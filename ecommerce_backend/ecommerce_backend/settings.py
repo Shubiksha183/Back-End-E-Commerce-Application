@@ -90,16 +90,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from elasticsearch import Elasticsearch
 
 # Create Elasticsearch client
+# es = Elasticsearch(
+#     hosts=["http://localhost:9200"],  # Connects to Elasticsearch on localhost
+# )
+
+# # ELASTICSEARCH_DSL configuration
+# ELASTICSEARCH_DSL = {
+#     'default': {
+#         'hosts': 'http://localhost:9200',  # No security, plain HTTP
+#     }
+# }
+
+
 es = Elasticsearch(
-    hosts=["http://localhost:9200"],  # Connects to Elasticsearch on localhost
+    hosts=["http://elasticsearch:9200"],  # Connects to Elasticsearch via Docker service name
 )
 
 # ELASTICSEARCH_DSL configuration
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://localhost:9200',  # No security, plain HTTP
+        'hosts': 'http://elasticsearch:9200',  # Using service name defined in docker-compose.yml
     }
 }
+
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
