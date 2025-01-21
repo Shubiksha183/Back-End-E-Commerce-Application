@@ -55,27 +55,27 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000"
 ]
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv("DB_NAME", "ecommerce_db"),
-#         'USER': os.getenv("DB_USER", "postgres"),
-#         'PASSWORD': os.getenv("DB_PASSWORD", "root123"),
-#         'HOST': os.getenv("DB_HOST", "localhost"),
-#         'PORT': os.getenv("DB_PORT", "5432"),
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_db',
-        'USER': 'postgres',
-        'PASSWORD': 'root123',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': os.getenv("DB_NAME", "ecommerce_db"),
+        'USER': os.getenv("DB_USER", "postgres"),
+        'PASSWORD': os.getenv("DB_PASSWORD", "root123"),
+        'HOST': os.getenv("DB_HOST", "localhost"),
+        'PORT': os.getenv("DB_PORT", "5432"),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ecommerce_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'root123',
+#         'HOST': 'db',
+#         'PORT': 5432,
+#     }
+# }
 
 
 REST_FRAMEWORK = {
@@ -90,28 +90,28 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from elasticsearch import Elasticsearch
 
 # Create Elasticsearch client
-# es = Elasticsearch(
-#     hosts=["http://localhost:9200"],  # Connects to Elasticsearch on localhost
-# )
-
-# # ELASTICSEARCH_DSL configuration
-# ELASTICSEARCH_DSL = {
-#     'default': {
-#         'hosts': 'http://localhost:9200',  # No security, plain HTTP
-#     }
-# }
-
-
 es = Elasticsearch(
-    hosts=["http://elasticsearch:9200"],  # Connects to Elasticsearch via Docker service name
+    hosts=["http://localhost:9200"],  # Connects to Elasticsearch on localhost
 )
 
 # ELASTICSEARCH_DSL configuration
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://elasticsearch:9200',  # Using service name defined in docker-compose.yml
+        'hosts': 'http://localhost:9200',  # No security, plain HTTP
     }
 }
+
+
+# es = Elasticsearch(
+#     hosts=["http://elasticsearch:9200"],  # Connects to Elasticsearch via Docker service name
+# )
+
+# # ELASTICSEARCH_DSL configuration
+# ELASTICSEARCH_DSL = {
+#     'default': {
+#         'hosts': 'http://elasticsearch:9200',  # Using service name defined in docker-compose.yml
+#     }
+# }
 
 
 SIMPLE_JWT = {

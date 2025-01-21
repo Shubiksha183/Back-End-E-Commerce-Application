@@ -48,11 +48,11 @@ class SigninView(APIView):
 
     def post(self, request):
         data = request.data
-        name = data.get('name')
+        email = data.get('email')
         password = data.get('password')
 
         try:
-            user = CustomUser.objects.get(name=name)
+            user = CustomUser.objects.get(email=email)
             if check_password(password, user.password):
                 refresh = RefreshToken.for_user(user)
                 return Response({

@@ -17,7 +17,7 @@ function Signin() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: username,
+          email: username,
           password: password,
         }),
       });
@@ -49,11 +49,11 @@ function Signin() {
       <h1>Signin</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">Email</label>
           <input
             id="username"
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
